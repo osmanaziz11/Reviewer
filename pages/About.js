@@ -1,8 +1,8 @@
 import Layout from '../components/Layout';
 
-const index = () => {
+const About = () => {
   return (
-    <Layout title="Welcome">
+    <Layout title="About">
       <div className="container">
         <div className="row">
           <div className="col">
@@ -13,4 +13,4 @@ const index = () => {
     </Layout>
   );
 };
-export default index;
+export default About;
