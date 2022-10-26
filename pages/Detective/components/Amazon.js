@@ -12,7 +12,7 @@ const Amazon = () => {
     event.preventDefault();
     Loader.setProgress(20);
     let URL = document.getElementById('url').value;
-    const req = await fetch('http://127.0.0.1:5000/api/review/amazon/', {
+    const req = await fetch('http://127.0.0.1:5000/api/pd', {
       method: 'POST',
       body: JSON.stringify({ url: URL }),
       headers: { 'content-type': 'application/json' },
