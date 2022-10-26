@@ -8,6 +8,7 @@ HEADERS = ({'User-Agent':
             Chrome/90.0.4430.212 Safari/537.36',
             'Accept-Language': 'en-US, en;q=0.5'})
 
+baseURL=''
 # Utility Functions 
 def getIMG(container):
     try:
@@ -21,31 +22,28 @@ def getTitle(container):
     except:
         return ''
 
-def getId(container):
+def getID(baseURL):
     try:
-        return container.find('table',{"id":"productDetails_detailBullets_sections1"}).find('td',class_='prodDetAttrValue').text
+        index=baseURL.find('/dp/')
+        return baseURL[index+4:index+14]
     except:
-        return ''
+        return 0
 
-def getRatingStars(container):
+def getExtension(baseURL):
     try:
-        return container.find('span',{"id":"acrPopover"}).text
+        check=''
+        for index in range(0,len(baseURL)):
+            if index>7:
+                if baseURL[index]=='/':
+                    break
+                else:
+                    check=check+baseURL[index]
+        return check
     except:
-        return ''
-
-def getRatingNumber(container):
-    try:
-        return container.find('a',{"id":"acrCustomerReviewLink"}).text
-    except:
-        return ''
-
-def getDesc(container):
-    try:
-        return container.find('div',{"id":"productDescription"}).find('p').text
-    except:
-        return ''
+        return 0
 
 
+    
 
 # Fetch HTML Content from the given link
 def getHTMLContent(url):
@@ -58,20 +56,16 @@ def getHTMLContent(url):
        return 0
 
 
-def parseHTML(HTML):
+def parseHTML(HTML,url):
     data=[]
     if HTML != 0:
         try:
             mainDiv = HTML.find("div",{"id":"ppd"})
-            idDiv=HTML.find("div",{"id":"productDetails2_feature_div"})
-            descDiv=HTML.find("div",{"id":"productDescription_feature_div"})
             product={
-                'id':getId(idDiv),
+                'id':getID(url),
+                'baseURL':getExtension(url),
                 'title':getTitle(mainDiv),
                 'imgSrc':getIMG(mainDiv),
-                'stars':getRatingStars(mainDiv),
-                'rating':getRatingNumber(mainDiv),
-                'desc':getDesc(descDiv),
             }
             data.append(product)
             return data
@@ -83,5 +77,5 @@ def parseHTML(HTML):
 
 def Main(url):
     HTML=getHTMLContent(url)
-    return parseHTML(HTML)
+    return parseHTML(HTML,url)
      
