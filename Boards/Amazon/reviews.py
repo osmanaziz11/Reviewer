@@ -1,7 +1,10 @@
 # import modules
+import random as random
 from bs4 import BeautifulSoup
 import requests
-from textblob import TextBlob
+from googletrans import Translator
+
+translator = Translator()
 
 HEADERS = ({'User-Agent':
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) \
@@ -20,7 +23,8 @@ def getName(container):
         
 def getTitle(container):
     try:
-        return container.find('span',class_='review-title-content').text
+        res=container.find('span',class_='review-title-content')
+        return container.find('a',class_='review-title-content').text if res == None else res.text
     except:
         0
 
@@ -31,22 +35,27 @@ def getStatus(container):
         0
 
 def checkLang(text):
-    return TextBlob(text).detect_language()
+    try:
+        return translator.detect(text).lang
+    except:
+        return 'English'
 
 def getReview(container,obj):
+    lang=['English', 'Chinese', 'Spanish', 'Russian']
     try:
-        main=container.find('span',class_='cr-original-truncatable-content')
-        check=main.find('span',class_='a-declarative')
-        if check != 'None':
-             # Going for next page
-            r = requests.get(f"{check.find('a')['href']}", headers=HEADERS)
-            htmlContent = r.content
-            soup = BeautifulSoup(htmlContent, "html.parser")
-            text=soup.find('div',class_='cm_cr-review_list').find('div',class_="review-text").text
-            return {'Text':text,'lang':checkLang(text)}
-        else:
-            reviewText=main.find('div',class_='review-text-sub-contents').text
-            return {'Text':reviewText,'lang':checkLang(reviewText)}
+        main=container.find('div',class_='a-spacing-small')
+        # check=main.find('span',class_='a-declarative')
+        # if check != None:
+        #      # Going for next page
+        #     r = requests.get(f"https://{obj['url']}{check.find('a')['href']}", headers=HEADERS)
+        #     htmlContent = r.content
+        #     soup = BeautifulSoup(htmlContent, "html.parser")
+        #     text=soup.find('div',class_='cm_cr-review_list').find('div',class_="review-text").text
+        #     return {'Text':text,'lang':checkLang(text)}
+        # else:
+        #     reviewText=main.find('div',class_='review-text-sub-contents')
+        #     a=main.find('div',class_='review-text-content').text if reviewText == None else reviewText.text
+        return {'Text':main.text,'lang':checkLang(main.text)}
     except:
         0
 def getLink(container,obj):
@@ -103,10 +112,14 @@ def parseHTML(HTML,obj):
 
 
 def Main(obj):
-   
+#    obj={
+#     url:'www.example.com',
+#     id:'B*******'
+#    }
+  
+    pageData=[]
     pages=1
-    # Page 1 by default
-    HTML=getHTMLContent(obj,pages)
+    HTML=getHTMLContent(obj,1)
     if HTML !=0:
         num=int(get_number_of_reviews(HTML))
         if num>10:
@@ -115,9 +128,10 @@ def Main(obj):
             else:
                 pages=num/10
     
-    if pages>1:
-        for i in range(2,pages+1):
-            HTML=getHTMLContent(obj,pages)
+    if pages>0:
+        for i in range(1,pages+1):
+            HTML=getHTMLContent(obj,i)
             res=parseHTML(HTML,obj)
-    return res
-     
+            pageData.append(res)
+           
+    return pageData

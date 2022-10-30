@@ -1,5 +1,5 @@
 
-import random
+import random as random
 import re
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pandas as pd
@@ -23,19 +23,20 @@ def feature_extraction(text):
     except:
         return 0
 
-def predict(data): 
-    res=[0,1]
-    try:
-        result={
-            'rfc':random.choice(res),
-            'lr':random.choice(res),
-            'svm':random.choice(res),
-            'knn':random.choice(res),
-        }
-        return result
-    except:
-        return 0
+def predict(jsonOBJ): 
+    result=[0,1]
+    predictRes=[]
+    fakeUsers=[]
+    realUsers=[]
+    for item in jsonOBJ['data']:
+        res=random.choice(result)
+        if res==0:
+            fakeUsers.append(item)
+        else:
+            realUsers.append(item)
+        predictRes.append(res)
+
+    return [{'result':int(sum(predictRes)/len(predictRes)*100), 'fakeUsers':fakeUsers,'reakUsers':realUsers}]
+
+
     
-def main(text):
-    data=feature_extraction(text)
-    return predict(data)
