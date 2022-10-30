@@ -1,20 +1,23 @@
-import { Pivot as Hamburger } from 'hamburger-react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { navContext } from '../pages/_app';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
+
+import { Pivot as Hamburger } from 'hamburger-react';
+import useCustom from '../hooks/custom';
+import { AiOutlineUser } from 'react-icons/ai';
 
 const Navbar = () => {
   const router = useRouter();
-  const navToggle = useContext(navContext);
+  const { NavStatus, setNavStatus } = useCustom();
 
   useEffect(() => {
     router.events.on('routeChangeComplete', () => {
-      if (navToggle.NavStatus) {
+      if (NavStatus) {
         document.getElementsByClassName('hamburger-react')[0].click();
       }
     });
   }, [router.events]);
+
   return (
     <div className="container-fluid header mb-5 shadow">
       <div className="row">
@@ -52,13 +55,24 @@ const Navbar = () => {
                 How it Works
               </li>
             </Link>
+            <Link href="/How-it-works">
+              <li className={`mx-3`}>
+                <AiOutlineUser
+                  style={{
+                    color: 'white',
+                    fontSize: '2rem',
+                    marginTop: '-5px',
+                  }}
+                ></AiOutlineUser>
+              </li>
+            </Link>
           </ul>
           <div className="d-md-none d-block">
             <Hamburger
               id="hamburger"
               size={30}
               distance="sm"
-              onToggle={() => navToggle.setNavStatus(!navToggle.NavStatus)}
+              onToggle={() => setNavStatus(!NavStatus)}
             ></Hamburger>
           </div>
         </div>

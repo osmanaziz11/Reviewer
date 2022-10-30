@@ -1,15 +1,14 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useContext } from 'react';
-import { navContext } from '../pages/_app.js';
+import useCustom from '../hooks/custom';
 
 const Menu = () => {
   const router = useRouter();
-  const navToggle = useContext(navContext);
+  const { NavStatus } = useCustom();
   return (
     <div
-      className={`container-fluid end-0 d-lg-none d-block main__container ${
-        !navToggle.NavStatus && 'opacity-100 visible'
+      className={`container-fluid end-0 d-md-none d-block main__container ${
+        !NavStatus && 'opacity-100 visible'
       } position-fixed`}
     >
       <div className="row h-100">

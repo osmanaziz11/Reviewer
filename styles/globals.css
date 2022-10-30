@@ -32,6 +32,11 @@ img {
   object-fit: cover;
 }
 /* =========== Components ============ */
+/* CircularProgressLoader */
+.CircularProgressbar-text {
+  fill: #9c9b91 !important;
+}
+/* CircularProgressLoader Ends */
 /* Navbar  */
 .header {
   /* border-bottom: 1px solid var(--border); */
@@ -103,6 +108,17 @@ img {
 }
 .URL_box button {
   outline: none;
+  transition: all 0.5s;
+  border: none;
+  cursor: pointer;
+}
+.green {
+  background-color: #008cc5 !important;
+  color: var(--font);
+}
+.danger {
+  background-color: #fe0000 !important;
+  color: var(--font);
 }
 .URL_box input {
   border: none;
@@ -113,11 +129,11 @@ img {
   outline: none;
 }
 .product__box {
-  width: 220px;
+  width: 90%;
   height: 300px;
 }
 .product__desc button {
-  background-color: var(--warning-btn);
+  background-color: #010409 !important;
   border: none;
   color: var(--font);
   outline: none;
@@ -125,4 +141,45 @@ img {
 .product__container {
   min-height: 350px;
 }
+.options select {
+  padding: 8px;
+  border: 1px solid var(--border) !important;
+  color: white;
+
+  outline: none;
+  background: none;
+  width: 300px;
+}
+.options select option {
+  color: black;
+}
+.fake_users_box button {
+  background-color: orange;
+  border: none;
+  padding: 5px;
+  color: black;
+}
+.fake_users_box {
+  height: 300px;
+  overflow: scroll;
+}
+.fake_users_box::-webkit-scrollbar {
+  display: none;
+}
 /* Detective Ends */
+
+/* Login  */
+.login__container {
+  border: 1px solid var(--border);
+  height: 400px;
+}
+.login__container .options button {
+  border: 1px solid var(--border);
+
+  background: none;
+  color: var(--font);
+  border-radius: 30px;
+}
+
+/* Login Ends */
+/* Jobs Ends */
