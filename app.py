@@ -12,7 +12,6 @@ import preprocess as pp
 app = Flask(__name__)
 CORS(app)
 
-
 # ==================
 # Application Endpoints 
 

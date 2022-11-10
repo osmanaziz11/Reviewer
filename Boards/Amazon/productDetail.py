@@ -1,6 +1,9 @@
 # import modules
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup,SoupStrainer
 import requests
+import time
+
+session_object = requests.Session()
 
 HEADERS = ({'User-Agent':
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) \
@@ -48,9 +51,9 @@ def getExtension(baseURL):
 # Fetch HTML Content from the given link
 def getHTMLContent(url):
    try:
-       r = requests.get(url, headers=HEADERS)
-       htmlContent = r.content
-       soup = BeautifulSoup(htmlContent, "html.parser")
+       htmlContent = session_object.get(url, headers=HEADERS)
+       strainer = SoupStrainer("div",{"id":"ppd"})
+       soup = BeautifulSoup(htmlContent.content, "lxml",parse_only=strainer)
        return soup
    except:
        return 0
@@ -60,12 +63,11 @@ def parseHTML(HTML,url):
     data=[]
     if HTML != 0:
         try:
-            mainDiv = HTML.find("div",{"id":"ppd"})
             product={
                 'id':getID(url),
                 'baseURL':getExtension(url),
-                'title':getTitle(mainDiv),
-                'imgSrc':getIMG(mainDiv),
+                'title':getTitle(HTML),
+                'imgSrc':getIMG(HTML),
             }
             data.append(product)
             return data

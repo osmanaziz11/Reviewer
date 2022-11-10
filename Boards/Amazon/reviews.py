@@ -1,9 +1,11 @@
 # import modules
 import random as random
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, SoupStrainer
 import requests
 from googletrans import Translator
+import time
 
+session_object = requests.Session()
 translator = Translator()
 
 HEADERS = ({'User-Agent':
@@ -61,11 +63,14 @@ def getReview(container,obj):
 def getLink(container,obj):
     return f"https://{obj['url']}{container.find('a')['href']}"
 
-def get_number_of_reviews(HTML):
+def get_number_of_reviews(obj):
     temp=''
     numbers=''
     try:
-        text = HTML.find("div",{"id":"filter-info-section"}).text
+        htmlContent = session_object.get(f"https://{obj['url']}/product-reviews/{obj['id']}/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews&pageNumber=1", headers=HEADERS)
+        strainer = SoupStrainer("div",{"id":"filter-info-section"})
+        soup = BeautifulSoup(htmlContent.content, "lxml",parse_only=strainer)
+        text = soup.text
         for char in text:
             if char!=' ' and char!='\n':
                 temp=temp+char
@@ -82,19 +87,18 @@ def get_number_of_reviews(HTML):
 # Fetch HTML Content from the given link
 def getHTMLContent(obj,page):
    try:
-       r = requests.get(f"https://{obj['url']}/product-reviews/{obj['id']}/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews&pageNumber={page}", headers=HEADERS)
-       htmlContent = r.content
-       soup = BeautifulSoup(htmlContent, "html.parser")
+       htmlContent = session_object.get(f"https://{obj['url']}/product-reviews/{obj['id']}/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews&pageNumber={page}", headers=HEADERS)
+       strainer = SoupStrainer("div",{"id":"cm_cr-review_list"})
+       soup = BeautifulSoup(htmlContent.content, "lxml",parse_only=strainer)
        return soup
    except:
        return 0
-
 
 def parseHTML(HTML,obj):
     data=[]
     if HTML != 0:
         try:
-            mainDiv = HTML.find("div",{"id":"cm_cr-review_list"}).findAll('div',class_='aok-relative')
+            mainDiv = HTML.findAll('div',class_='aok-relative')
             for container in mainDiv:
                 data.append({
                 "username": getName(container),
@@ -116,21 +120,18 @@ def Main(obj):
 #     url:'www.example.com',
 #     id:'B*******'
 #    }
-  
     pageData=[]
     pages=1
-    HTML=getHTMLContent(obj,1)
-    if HTML !=0:
-        num=int(get_number_of_reviews(HTML))
-        if num>10:
-            if isinstance(num/10,float):
-                pages=int(num/10)+1
-            else:
-                pages=num/10
+    num=int(get_number_of_reviews(obj))
+    if num>10:
+        if isinstance(num/10,float):
+            pages=int(num/10)+1
+        else:
+            pages=num/10
     
     if pages>0:
         for i in range(1,pages+1):
-            HTML=getHTMLContent(obj,i)
+            HTML=getHTMLContent(obj,i)  
             res=parseHTML(HTML,obj)
             pageData.append(res)
            
