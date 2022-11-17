@@ -11,12 +11,6 @@ const Layout = ({ title, children }) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!user) {
-      router.replace('/Login');
-    }
-  }, []);
-
-  useEffect(() => {
     router.events.on('routeChangeStart', () => {
       setProgress(20);
     });
@@ -34,11 +28,14 @@ const Layout = ({ title, children }) => {
         className="container-fluid position-relative Layout-container"
         style={{
           maxWidth: '1500px',
-          overflowX: 'hidden',
+          overflow: 'hidden',
           minHeight: 'calc(100vh - 190px)',
         }}
       >
         <Menu />
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
         {children}
       </div>
     </>

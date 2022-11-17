@@ -14,6 +14,7 @@ export function CustomHook(props) {
   const [totalReviews, setTReviews] = useState(0);
   const [selectedLang, setSLanguage] = useState('EN');
   const [ARStatus, setARStatus] = useState(false);
+  const [theme, setTheme] = useState('#075ad3');
 
   const loginWithGoogle = async () => {
     const { error, user } = await AuthService.loginWithGoogle();
@@ -43,11 +44,14 @@ export function CustomHook(props) {
     loginWithGithub,
     logout,
     totalReviews,
+    setUser,
     setTReviews,
     selectedLang,
     setSLanguage,
     ARStatus,
     setARStatus,
+    theme,
+    setTheme,
   };
 
   return <myContext.Provider value={value} {...props} />;

@@ -2,10 +2,10 @@ import LoadingBar from 'react-top-loading-bar';
 import useCustom from '../hooks/custom';
 
 const Topbar = () => {
-  const { progress, setProgress } = useCustom();
+  const { progress, setProgress, theme } = useCustom();
   return (
     <LoadingBar
-      color="#f78166"
+      color={theme}
       progress={progress}
       onLoaderFinished={() => setProgress(0)}
       height={2}

@@ -1,46 +1,47 @@
-import { useRouter } from 'next/router';
-import Link from 'next/link';
 import { useForm } from 'react-hook-form';
-
-import { FcGoogle } from 'react-icons/fc';
-import { AiFillGithub } from 'react-icons/ai';
-import { TbBrandMeta } from 'react-icons/tb';
 import Head from 'next/head';
 import useCustom from '../hooks/custom';
-import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 
-const Login = () => {
-  const { user, setUser, error, loginWithGoogle, loginWithGithub, theme } =
-    useCustom();
+const Register = () => {
   const router = useRouter();
+  const { user, error, loginWithGoogle, loginWithGithub, theme } = useCustom();
+  const [Loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
-    setError,
     setValue,
     formState: { errors },
   } = useForm();
 
   const onSubmit = async (data) => {
-    const req = await fetch(`/api/signin`, {
+    setLoading(true);
+    const req = await fetch(`/api/create`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         Username: data.Username,
+        Name: data.FirstName,
+        Email: data.Email,
         Password: data.Password,
       }),
     });
     const resp = await req.json();
     if (resp.status === 1) {
-      localStorage.setItem('user', JSON.stringify(resp.body));
-      setUser(true);
-      router.replace('/Detective');
-      return <h1>Loading...</h1>;
+      router.replace('/Login');
     } else {
-      setError('Password', { type: 'custom', message: 'Invalid Password' });
+      setLoading(false);
+      router.replace('/Register');
     }
+  };
+
+  const validateInput = (event) => {
+    setValue(event.target.name, event.target.value, {
+      shouldValidate: true,
+    });
   };
 
   const isUsernameExist = async (event) => {
@@ -52,18 +53,14 @@ const Login = () => {
       body: JSON.stringify({ Username: event }),
     });
     const resp = await req.json();
-    if (resp.status === 1) {
-      return true;
-    } else return false;
-  };
-
-  const validateInput = (event) => {
-    setValue(event.target.name, event.target.value, { shouldValidate: true });
+    console.log(resp);
+    if (resp.status === 1) return false;
+    else return true;
   };
   return (
     <>
       <Head>
-        <title>{`Login -  Review Detective`}</title>
+        <title>{`Sign Up -  Review Detective`}</title>
       </Head>
       <div
         className="container-fluid position-relative Layout-container"
@@ -77,7 +74,7 @@ const Login = () => {
           {/* Search  */}
           <div className="row  h-100">
             <div className="col d-flex login__container flex-column justify-content-center h-100 align-items-center">
-              <h2 className="text-center">Login To Your Account</h2>
+              <h2 className="text-center">Register Your Account</h2>
               <p className="text-center my-2">
                 This protects you from getting ripped off when shopping online.
               </p>
@@ -86,6 +83,21 @@ const Login = () => {
                 className="d-flex flex-column mt-2"
                 onSubmit={handleSubmit(onSubmit)}
               >
+                <input
+                  type="text"
+                  name=""
+                  id=""
+                  placeholder="Name"
+                  className={`mb-3 ${errors.FirstName ? 'validError' : ''}`}
+                  autoComplete="off"
+                  {...register('FirstName', {
+                    onChange: validateInput,
+                    minLength: 5,
+                    maxLength: 10,
+                    required: true,
+                    pattern: /^[A-Za-z]+$/,
+                  })}
+                />
                 <input
                   type="text"
                   name=""
@@ -103,6 +115,19 @@ const Login = () => {
                   })}
                 />
                 <input
+                  type="text"
+                  name=""
+                  id=""
+                  placeholder="Email"
+                  className={`mb-3 ${errors.Email ? 'validError' : ''}`}
+                  {...register('Email', {
+                    onChange: validateInput,
+                    required: true,
+                    // pattern:
+                    //   /^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@[a-zA-Z0-9-]+(?:\. [a-zA-Z0-9-]+)*$/,
+                  })}
+                />
+                <input
                   type="password"
                   name=""
                   id=""
@@ -116,41 +141,12 @@ const Login = () => {
                     maxLength: 15,
                   })}
                 />
-                <p className="text-center mt-3">Forget Password?</p>
-                <ul className="list-unstyled m-0 p-0 social d-flex my-3 justify-content-center align-items-center">
-                  <li className="shadow" onClick={loginWithGoogle}>
-                    <FcGoogle
-                      style={{
-                        color: 'white',
-                        fontSize: '2rem',
-                        marginRight: '5px',
-                      }}
-                    />
-                  </li>
-                  <li className="mx-3 shadow" onClick={loginWithGithub}>
-                    <TbBrandMeta
-                      style={{
-                        color: '#0C8CE9',
-                        fontSize: '2rem',
-                        marginRight: '5px',
-                      }}
-                    />
-                  </li>
-                  <li className=" shadow">
-                    <AiFillGithub
-                      style={{
-                        color: 'white',
-                        fontSize: '2rem',
-                        marginRight: '5px',
-                      }}
-                    />
-                  </li>
-                </ul>
+
                 <button
-                  className="px-5 py-3 text-white mt-3"
+                  className="px-5 py-3 text-white mt-4"
                   style={{ backgroundColor: theme }}
                 >
-                  Sign in
+                  {Loading ? <div className="loader__GIF"></div> : 'Sign up'}
                 </button>
               </form>
             </div>
@@ -160,4 +156,4 @@ const Login = () => {
     </>
   );
 };
-export default Login;
+export default Register;
