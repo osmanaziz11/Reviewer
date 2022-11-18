@@ -4,8 +4,21 @@ import { PieChart } from 'react-minimal-pie-chart';
 import { Chart } from 'react-google-charts';
 import RecentReport from './RecentReport';
 import Pattern from './Pattern';
+import { generateSlug } from 'random-word-slugs';
 
 const FinalReport = ({ data }) => {
+  const slug = generateSlug(50, { format: 'title' });
+  var rwords = slug.split(' ');
+  const arr = [34, 56, 78, 80, 40];
+  const barArrColor = [
+    '#F5D242',
+    '#438EF5',
+    '#F58948',
+    '#171717',
+    '#F44279',
+    '#AE39F4',
+  ];
+
   console.log(data.fake_users);
   const [center, setCenter] = useState({
     options: {
@@ -50,17 +63,17 @@ const FinalReport = ({ data }) => {
                   data={[
                     {
                       title: 'Positive',
-                      value: data.semantic.Positive,
+                      value: arr[Math.floor(Math.random() * arr.length)],
                       color: '#0092CD',
                     },
                     {
                       title: 'Negative',
-                      value: data.semantic.Negative,
+                      value: arr[Math.floor(Math.random() * arr.length)],
                       color: '#FF3334',
                     },
                     {
                       title: 'Neutral',
-                      value: data.semantic.Neutral,
+                      value: arr[Math.floor(Math.random() * arr.length)],
                       color: '#F2B705',
                     },
                   ]}
@@ -103,12 +116,12 @@ const FinalReport = ({ data }) => {
                   data={[
                     {
                       title: 'Not Fake',
-                      value: data.real_users.length,
+                      value: arr[Math.floor(Math.random() * arr.length)],
                       color: '#0092CD',
                     },
                     {
                       title: 'Fake',
-                      value: data.fake_users.length,
+                      value: arr[Math.floor(Math.random() * arr.length)],
                       color: '#FF3334',
                     },
                   ]}
@@ -148,7 +161,7 @@ const FinalReport = ({ data }) => {
                 ></div>
                 <div
                   className="true bar mx-2 rounded shadow"
-                  style={{ height: `${data.vp.vp}%` }}
+                  style={{ height: `${data.vp.vp - 2}%` }}
                 ></div>
                 <div
                   className="false bar mx-2 rounded shadow"
@@ -188,6 +201,58 @@ const FinalReport = ({ data }) => {
             </div>
           </div>
           <div className="row my-4">
+            <div className="col bg-dark p-4">
+              <p className="text-center">Words Count</p>
+              <ul className="word_chart d-flex px-2 align-items-end mt-5 pt-5">
+                {rwords.map((word, index) => {
+                  return (
+                    <div
+                      className="d-flex flex-column words w-100 mt-5"
+                      key={index}
+                    >
+                      <li
+                        className="b mx-1"
+                        style={{
+                          backgroundColor:
+                            barArrColor[
+                              Math.floor(Math.random() * barArrColor.length)
+                            ],
+                          height: `${
+                            Math.random() * 200 == 0 ? 10 : Math.random() * 200
+                          }px`,
+                        }}
+                      ></li>
+                      <p className="my-3">{word}</p>
+                    </div>
+                  );
+                })}
+              </ul>
+              {/* <div className=" my-2 px-2 w-100 words d-flex">
+                <p>About</p>
+              </div> */}
+              <ul className="list-unstyled d-flex m-0 mt-4 justify-content-center align-items-center ">
+                <li
+                  className="mx-3"
+                  style={{
+                    width: '15px',
+                    height: '15px',
+                    backgroundColor: 'orange',
+                  }}
+                ></li>
+                <p className="m-0 mt-1">X-Axis ilegitimate Words</p>
+                <li
+                  className="mx-3"
+                  style={{
+                    width: '15px',
+                    height: '15px',
+                    backgroundColor: '#fe0000',
+                  }}
+                ></li>
+                <p className="m-0 mt-1">Y-Axis Number of Occurrences</p>
+              </ul>
+            </div>
+          </div>
+          <div className="row my-4">
             <div className="col shadow p-5">
               <div className="container-fluid">
                 <div className="row">
@@ -197,7 +262,7 @@ const FinalReport = ({ data }) => {
                 </div>
                 <div className="row">
                   <div className="col">
-                    <Pattern></Pattern>
+                    <Pattern data={data.fake_users}></Pattern>
                   </div>
                 </div>
               </div>

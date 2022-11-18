@@ -880,3 +880,20 @@ img {
   height: 50%;
   background-color: #075ad3;
 }
+
+.word_chart {
+  width: 100%;
+  height: 300px;
+}
+.b {
+  width: 13px;
+}
+
+.words p {
+  writing-mode: vertical-rl;
+  font-size: 13px;
+}
+.report__box .circleAvatar {
+  width: 100px !important;
+  height: 100px !important;
+}

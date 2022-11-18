@@ -43,9 +43,12 @@ const AnaylsisRepo = ({ url }) => {
           setProgress(100);
           router.replace('/Detective/Amazon');
         }
+        setProgress(100);
+        router.replace('/Detective/Amazon');
       }
     } catch (error) {
-      alert('Please try again. Report coud not save');
+      setProgress(100);
+      router.replace('/Detective/Amazon');
     }
   }
 

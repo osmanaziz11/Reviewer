@@ -8,7 +8,7 @@ import { securePassword } from '../../db/util/functions';
 var report = require('../../db/models/report');
 export default async function handler(req, res) {
   if (req.method == 'POST') {
-    console.log(req.body);
+    console.log(req.body.initialRepo[0]);
     try {
       const create = new report(req.body);
       await create.save();

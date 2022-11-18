@@ -13,6 +13,12 @@ const Login = () => {
   const { user, setUser, error, loginWithGoogle, loginWithGithub, theme } =
     useCustom();
   const router = useRouter();
+  useEffect(() => {
+    if (user) {
+      router.replace('/Detective');
+    }
+  }, []);
+
   const {
     register,
     handleSubmit,

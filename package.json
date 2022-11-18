@@ -18,6 +18,8 @@
     "hamburger-react": "^2.5.0",
     "mongoose": "^6.7.2",
     "next": "12.3.1",
+    "random-word-slugs": "^0.1.6",
+    "random-words": "^1.2.0",
     "react": "18.2.0",
     "react-apexcharts": "^1.4.0",
     "react-chartjs-2": "^4.3.1",
@@ -28,6 +30,7 @@
     "react-icons": "^4.6.0",
     "react-loading-skeleton": "^3.1.0",
     "react-minimal-pie-chart": "^8.4.0",
+    "react-particles-js": "^3.6.0",
     "react-top-loading-bar": "^2.3.1",
     "recharts": "^2.1.16"
   },
