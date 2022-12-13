@@ -7,7 +7,7 @@ import useCustom from '../hooks/custom';
 
 const Index = () => {
   const { user, theme } = useCustom();
-  const { displayName, photoURL } = user;
+  // const { displayName, photoURL } = user;
 
   return (
     <Layout title="Welcome">
