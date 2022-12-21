@@ -17,6 +17,7 @@ export function CustomHook(props) {
   const [selectedLang, setSLanguage] = useState('EN');
   const [ARStatus, setARStatus] = useState(false);
   const [theme, setTheme] = useState('#075ad3');
+  const [testing, setTesting] = useState('');
 
   useEffect(() => {
     setUser(localStorage.getItem('user'));
@@ -60,6 +61,8 @@ export function CustomHook(props) {
     setARStatus,
     theme,
     setTheme,
+    setTesting,
+    testing,
   };
 
   return <myContext.Provider value={value} {...props} />;

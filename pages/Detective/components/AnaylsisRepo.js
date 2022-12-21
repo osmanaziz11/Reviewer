@@ -9,7 +9,7 @@ import SK__initialReport from './skeleton/SK__initialReport';
 
 const AnaylsisRepo = ({ url }) => {
   const router = useRouter();
-  const { setProgress } = useCustom();
+  const { setProgress, setTesting } = useCustom();
   const [finalReport, setFinalReport] = useState([]);
   const [initialReport, setInitialReport] = useState({});
   const [SK__initRepo__status, setSK__initRepo__status] = useState(true);
@@ -18,6 +18,7 @@ const AnaylsisRepo = ({ url }) => {
   const [Review, setReview] = useState(0);
   const [Language, setLanguage] = useState('en');
   const [fdata, setFData] = useState([]);
+  const [pdata, setPData] = useState([]);
 
   function reviewChange(event) {
     setReview(event.target.value);
@@ -64,6 +65,7 @@ const AnaylsisRepo = ({ url }) => {
       if (resp) {
         if (resp.status == 1) {
           const { body } = resp;
+          setTesting(body[0].id);
           try {
             fetch(`${process.env.NEXT_PUBLIC_HOST_NAME}api/reviews`, {
               method: 'POST',
@@ -114,11 +116,16 @@ const AnaylsisRepo = ({ url }) => {
           review={Review}
           lang={Language}
           data={finalReport}
-          func={[setSK__finalRepo__status, setFinalRepo__status, setFData]}
+          func={[
+            setSK__finalRepo__status,
+            setFinalRepo__status,
+            setFData,
+            setPData,
+          ]}
         />
       )}
       {!SK__finalRepo__status && finalRepo__status && (
-        <FinalReport data={fdata} />
+        <FinalReport fdata={fdata} pdata={pdata} />
       )}
     </div>
   );

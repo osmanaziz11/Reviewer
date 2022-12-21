@@ -897,3 +897,16 @@ img {
   width: 100px !important;
   height: 100px !important;
 }
+.reviewAnalysis__container::-webkit-scrollbar {
+  display: none;
+}
+.reviewAnalysis__container {
+  max-height: 844px !important;
+  overflow: scroll;
+}
+.graph__box p {
+  font-size: 13px;
+}
+.graph__container .bar {
+  height: 300px;
+}

@@ -18,6 +18,7 @@ const Amazon = () => {
     event.preventDefault();
     setProgress(20);
     setURL(document.getElementById('url').value);
+
     setAnaylsis_Status(true);
     setProgress(100);
   };
