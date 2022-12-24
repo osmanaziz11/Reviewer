@@ -20,14 +20,14 @@ const Navbar = () => {
   return (
     <div className="container-fluid header mb-5 shadow">
       <div className="row">
-        <div className="col-4 Logo__container d-flex p-4 pb-3 align-items-center">
+        <div className="col-lg-4 col-10 Logo__container d-flex py-sm-4 py-2 px-sm-4 px-2 pb-3 align-items-center">
           <div className="Logo"></div>
           <Link href="/">
             <h5 className="cursor-pointer mt-2 ms-2">Reviewer</h5>
           </Link>
         </div>
-        <div className="col-4 nav__container p-4 pb-3 d-flex justify-content-center">
-          <ul className="list-unstyled d-md-flex d-none m-0 p-0 mt-3">
+        <div className="col-4 nav__container p-4 pb-3 d-lg-flex d-none justify-content-center">
+          <ul className="list-unstyled d-lg-flex d-none m-0 p-0 mt-3">
             <Link href="/About">
               <li
                 className={`mx-3 ${
@@ -56,17 +56,9 @@ const Navbar = () => {
               </li>
             </Link>
           </ul>
-          <div className="d-md-none d-block">
-            <Hamburger
-              id="hamburger"
-              size={30}
-              distance="sm"
-              onToggle={() => setNavStatus(!NavStatus)}
-            ></Hamburger>
-          </div>
         </div>
-        <div className="col-4 nav__container p-4 pb-3 d-flex justify-content-end align-items-center">
-          <ul className="list-unstyled d-md-flex d-none m-0 p-0 mt-3">
+        <div className="col-lg-4 col-2 nav__container py-sm-4 py-2 px-sm-4 px-2 pb-3 d-flex justify-content-end align-items-center">
+          <ul className="list-unstyled d-lg-flex d-none m-0 p-0 mt-3">
             <Link href="/Login">
               <li
                 className={`mx-3 ${
@@ -103,7 +95,7 @@ const Navbar = () => {
               </li>
             </Link>
           </ul>
-          <div className="d-md-none d-block">
+          <div className="d-lg-none d-block pt-3">
             <Hamburger
               id="hamburger"
               size={30}

@@ -32,8 +32,8 @@ const Amazon = () => {
   return (
     <Layout title="Amazon">
       {!anaylsis_status ? (
-        <div className="container amazon_board_container">
-          <div className="row">
+        <div className="container  amazon_board_container">
+          <div className="row ">
             <div className="col">
               <p>
                 <Link href="/Detective">
@@ -56,7 +56,7 @@ const Amazon = () => {
                     onChange={isUrlValid}
                   />
                   <button
-                    className={`px-4 py-2 ${!UrlStatus ? 'danger' : 'green'}`}
+                    className={`px-3 py-2 ${!UrlStatus ? 'danger' : 'green'}`}
                     disabled={!UrlStatus ? 1 : 0}
                   >
                     Fetch Product
@@ -67,11 +67,11 @@ const Amazon = () => {
           </div>
           <div className="row">
             <div className="col p-0">
-              <h3>Recent Reports</h3>
+              <h5 className="ms-3">Recent Reports</h5>
             </div>
           </div>
           <div className="row px-3 mb-5">
-            <div className="col product__container rounded p-4">
+            <div className="col product__container rounded ">
               <RecentReport></RecentReport>
             </div>
           </div>

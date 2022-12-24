@@ -176,7 +176,7 @@ img {
 /* Components  */
 /* Recent Report  */
 .report__box {
-  width: 300px;
+  width: 252px;
   height: 200px;
 }
 .react-loading-skeleton {
@@ -185,7 +185,8 @@ img {
 /* Recent Report Ends */
 /* Components Ends */
 .singleBoard {
-  width: 280px;
+  max-width: 280px;
+  width: 256px;
   height: 230px;
   border: 1px solid var(--border);
 }
@@ -200,11 +201,11 @@ img {
   cursor: pointer;
 }
 .green {
-  background-color: #008cc5 !important;
+  background-color: #075ad3 !important;
   color: var(--font);
 }
 .danger {
-  background-color: #fe0000 !important;
+  background-color: #fe0000d8 !important;
   color: var(--font);
 }
 .URL_box input {

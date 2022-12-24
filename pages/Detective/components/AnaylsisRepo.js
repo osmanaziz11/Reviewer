@@ -28,29 +28,28 @@ const AnaylsisRepo = ({ url }) => {
     setLanguage(event.target.value);
   }
   async function saveReport() {
-    setProgress(20);
-    try {
-      const req = await fetch(`/api/save`, {
-        method: 'POST',
-        body: JSON.stringify({ initialRepo: finalReport, finalRepo: fdata }),
-        headers: { 'content-type': 'application/json' },
-      });
-
-      const resp = await req.json();
-      if (resp) {
-        setProgress(30);
-        console.log(resp);
-        if (resp.status == 1) {
-          setProgress(100);
-          router.replace('/Detective/Amazon');
-        }
-        setProgress(100);
-        router.replace('/Detective/Amazon');
-      }
-    } catch (error) {
-      setProgress(100);
-      router.replace('/Detective/Amazon');
-    }
+    // setProgress(20);
+    // try {
+    //   const req = await fetch(`/api/save`, {
+    //     method: 'POST',
+    //     body: JSON.stringify({ initialRepo: finalReport, finalRepo: fdata }),
+    //     headers: { 'content-type': 'application/json' },
+    //   });
+    //   const resp = await req.json();
+    //   if (resp) {
+    //     setProgress(30);
+    //     console.log(resp);
+    //     if (resp.status == 1) {
+    //       setProgress(100);
+    //       router.replace('/Detective/Amazon');
+    //     }
+    //     setProgress(100);
+    //     router.replace('/Detective/Amazon');
+    //   }
+    // } catch (error) {
+    //   setProgress(100);
+    //   router.replace('/Detective/Amazon');
+    // }
   }
 
   const analyze = async (URL) => {
@@ -65,7 +64,6 @@ const AnaylsisRepo = ({ url }) => {
       if (resp) {
         if (resp.status == 1) {
           const { body } = resp;
-          setTesting(body[0].id);
           try {
             fetch(`${process.env.NEXT_PUBLIC_HOST_NAME}api/reviews`, {
               method: 'POST',
@@ -74,9 +72,12 @@ const AnaylsisRepo = ({ url }) => {
             })
               .then((response) => response.json())
               .then((data) => {
-                setFinalReport(data.body);
-                setInitialReport({ product: body, details: data.body });
-                setSK__initRepo__status(false);
+                if (data.status == 1) {
+                  setFinalReport(data.body);
+                  setInitialReport({ product: body, details: data.body });
+                  setSK__initRepo__status(false);
+                }
+                console.log(data.body);
               });
           } catch (error) {}
         }
@@ -90,7 +91,7 @@ const AnaylsisRepo = ({ url }) => {
   useEffect(() => {
     analyze(url);
   }, []);
-
+  analyze(url);
   return (
     <div className="container">
       <div className="row">

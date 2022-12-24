@@ -44,6 +44,10 @@ const SK__finalReport = ({ review, lang, func, data }) => {
                   func[0](false);
                   func[1](true);
                 }, 5000);
+              } else {
+                setTimeout(() => {
+                  // if in case error
+                }, 155000);
               }
             }
           }
