@@ -8,21 +8,21 @@ const Menu = () => {
   return (
     <div
       className={`container-fluid end-0 d-md-none d-block main__container ${
-        !NavStatus && 'opacity-100 visible'
+        NavStatus && 'opacity-100 visible'
       } position-fixed`}
     >
       <div className="row h-100">
         <div className="col h-100">
           <ul className="list-unstyled p-0 d-flex flex-column align-items-center w-100 h-100">
             <li className="my-3">
-              <Link href="/">
+              <Link href="/About">
                 <a className={router.pathname == '/' ? 'activeRoute' : ''}>
                   About
                 </a>
               </Link>
             </li>
             <li className="my-3">
-              <Link href="/portfolio">
+              <Link href="/Detective">
                 <a
                   className={
                     router.pathname == '/portfolio' ? 'activeRoute' : ''
@@ -33,11 +33,29 @@ const Menu = () => {
               </Link>
             </li>
             <li className="my-3">
-              <Link href="/wedding">
+              <Link href="/">
                 <a
                   className={router.pathname == '/wedding' ? 'activeRoute' : ''}
                 >
-                  How it Works
+                  Support
+                </a>
+              </Link>
+            </li>
+            <li className="my-3">
+              <Link href="/Login">
+                <a
+                  className={router.pathname == '/wedding' ? 'activeRoute' : ''}
+                >
+                  Login
+                </a>
+              </Link>
+            </li>
+            <li className="my-3">
+              <Link href="/Register">
+                <a
+                  className={router.pathname == '/wedding' ? 'activeRoute' : ''}
+                >
+                  Register
                 </a>
               </Link>
             </li>

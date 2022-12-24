@@ -72,6 +72,7 @@ const AnaylsisRepo = ({ url }) => {
             })
               .then((response) => response.json())
               .then((data) => {
+                console.log(data);
                 setFinalReport(data.body);
                 setInitialReport({ product: body, details: data.body });
                 setSK__initRepo__status(false);
