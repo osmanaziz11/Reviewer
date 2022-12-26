@@ -176,7 +176,7 @@ img {
 /* Components  */
 /* Recent Report  */
 .report__box {
-  width: 300px;
+  width: 252px;
   height: 200px;
 }
 .react-loading-skeleton {
@@ -185,7 +185,8 @@ img {
 /* Recent Report Ends */
 /* Components Ends */
 .singleBoard {
-  width: 280px;
+  max-width: 280px;
+  width: 256px;
   height: 230px;
   border: 1px solid var(--border);
 }
@@ -200,11 +201,11 @@ img {
   cursor: pointer;
 }
 .green {
-  background-color: #008cc5 !important;
+  background-color: #075ad3 !important;
   color: var(--font);
 }
 .danger {
-  background-color: #fe0000 !important;
+  background-color: #fe0000d8 !important;
   color: var(--font);
 }
 .URL_box input {
@@ -896,4 +897,133 @@ img {
 .report__box .circleAvatar {
   width: 100px !important;
   height: 100px !important;
+}
+.reviewAnalysis__container::-webkit-scrollbar {
+  display: none;
+}
+.reviewAnalysis__container {
+  max-height: 844px !important;
+  overflow: scroll;
+}
+.graph__box p {
+  font-size: 13px;
+}
+.graph__container .bar {
+  height: 300px;
+}
+/* Graphs  */
+@media screen and (max-width: 1172px) {
+  .URL__container input {
+    width: 84% !important;
+  }
+}
+.p_p::-webkit-scrollbar {
+  display: none;
+}
+.p_p {
+  max-height: 167px !important;
+  overflow: scroll;
+}
+.not_fake {
+  color: #09ff09 !important;
+}
+.h6_fake {
+  color: #8addff;
+}
+.fake {
+  color: #ff0d0d !important;
+}
+.bg-black {
+  background: black !important;
+}
+/* Graphs Ends */
+/* URL Bo/ x */
+@media screen and (max-width: 1172px) {
+  .URL__container input {
+    width: 84% !important;
+  }
+}
+@media screen and (max-width: 1140px) {
+  .URL__container input {
+    width: 83% !important;
+  }
+}
+@media screen and (max-width: 1064px) {
+  .URL__container input {
+    width: 82% !important;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .URL__container input {
+    width: 80% !important;
+  }
+}
+@media screen and (max-width: 862) {
+  .URL__container input {
+    width: 78% !important;
+  }
+}
+@media screen and (max-width: 772px) {
+  .URL__container input {
+    width: 77% !important;
+  }
+}
+@media screen and (max-width: 730px) {
+  .URL__container input {
+    width: 76% !important;
+  }
+}
+@media screen and (max-width: 706px) {
+  .URL__container input {
+    width: 74% !important;
+  }
+}
+@media screen and (max-width: 658px) {
+  .URL__container input {
+    width: 73% !important;
+  }
+}
+@media screen and (max-width: 644px) {
+  .URL__container input {
+    width: 72% !important;
+  }
+}
+@media screen and (max-width: 614px) {
+  .URL__container input {
+    width: 70% !important;
+  }
+}
+@media screen and (max-width: 578px) {
+  .URL__container input {
+    width: 66% !important;
+  }
+}
+@media screen and (max-width: 544px) {
+  .URL__container input {
+    width: 64% !important;
+  }
+}
+@media screen and (max-width: 530px) {
+  .URL__container input {
+    width: 62% !important;
+  }
+}
+@media screen and (max-width: 484px) {
+  .URL__container input {
+    width: 60% !important;
+  }
+}
+@media screen and (max-width: 452px) {
+  .URL__container input {
+    width: 56% !important;
+  }
+}
+@media screen and (max-width: 416px) {
+  .URL__container input {
+    margin-bottom: 8px;
+    width: 100% !important;
+  }
+  .URL_box {
+    flex-direction: column !important;
+  }
 }

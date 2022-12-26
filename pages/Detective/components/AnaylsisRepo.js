@@ -1,23 +1,27 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { CiSaveDown2 } from 'react-icons/ci';
+import { ToastContainer, toast } from 'react-toastify';
 import useCustom from '../../../hooks/custom';
 import FinalReport from './FinalReport';
 import InitialReport from './InitialReport';
 import SK__finalReport from './skeleton/SK__finalReport';
 import SK__initialReport from './skeleton/SK__initialReport';
-
+import { db } from '../../../Firebase/firebase.config';
+import { collection, addDoc } from 'firebase/firestore';
+import 'react-toastify/dist/ReactToastify.css';
+import { jsPDF } from 'jspdf';
 const AnaylsisRepo = ({ url }) => {
   const router = useRouter();
-  const { setProgress } = useCustom();
-  const [finalReport, setFinalReport] = useState([]);
+  const { setProgress, dbinit, dbfinal } = useCustom();
+  const [finalReport, setFinalReport] = useState({});
   const [initialReport, setInitialReport] = useState({});
   const [SK__initRepo__status, setSK__initRepo__status] = useState(true);
   const [SK__finalRepo__status, setSK__finalRepo__status] = useState(false);
   const [finalRepo__status, setFinalRepo__status] = useState(false);
   const [Review, setReview] = useState(0);
   const [Language, setLanguage] = useState('en');
-  const [fdata, setFData] = useState([]);
+  const [fdata, setFData] = useState({});
 
   function reviewChange(event) {
     setReview(event.target.value);
@@ -28,27 +32,50 @@ const AnaylsisRepo = ({ url }) => {
   }
   async function saveReport() {
     setProgress(20);
+    console.log(initialReport.product);
     try {
-      const req = await fetch(`/api/save`, {
-        method: 'POST',
-        body: JSON.stringify({ initialRepo: finalReport, finalRepo: fdata }),
-        headers: { 'content-type': 'application/json' },
+      const dbInstance = collection(db, 'report');
+      addDoc(dbInstance, {
+        initialReport: initialReport.product,
+        finalreport: fdata.overallResult,
       });
 
-      const resp = await req.json();
-      if (resp) {
-        setProgress(30);
-        console.log(resp);
-        if (resp.status == 1) {
-          setProgress(100);
-          router.replace('/Detective/Amazon');
-        }
+      setTimeout(() => {
         setProgress(100);
-        router.replace('/Detective/Amazon');
-      }
+        toast.success('Report Save successfully.', {
+          position: 'bottom-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark',
+        });
+      }, 2000);
+      const doc = new jsPDF('landscape', 'px', 'a4', 'false');
+      doc.text(60, 10, 'Review Detection Report', 10, 10);
+      doc.text(
+        60,
+        60,
+        `Product Title: ${initialReport.product[0].title.substring(0, 5)}`
+      );
+      doc.text(60, 80, 'Overall Results');
+      doc.text(60, 100, `Positive: ${fdata.overallResult.Positive}`);
+      doc.text(60, 120, `Predicted Not Fake: ${fdata.overallResult.Positive}`);
+      doc.save('Report.pdf');
     } catch (error) {
+      toast.error("Report coudn't save Please try again.", {
+        position: 'bottom-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
       setProgress(100);
-      router.replace('/Detective/Amazon');
     }
   }
 
@@ -72,18 +99,28 @@ const AnaylsisRepo = ({ url }) => {
             })
               .then((response) => response.json())
               .then((data) => {
-                console.log(data);
-                setFinalReport(data.body);
+                dbinit = [{ product: body, initialReport: data.body }];
+                setFinalReport({ body: data.body, id: body[0].id });
                 setInitialReport({ product: body, details: data.body });
                 setSK__initRepo__status(false);
               });
-          } catch (error) {}
+          } catch (error) {
+            //  /
+          }
         }
       } else {
-        alert('SCPY:2 Module Error');
       }
     } catch (error) {
-      alert('SCPY:1 Module Error');
+      // toast.error(error.message, {
+      //   position: 'bottom-center',
+      //   autoClose: false,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: 0.2,
+      //   theme: 'dark',
+      // });
     }
   };
   useEffect(() => {
@@ -91,37 +128,54 @@ const AnaylsisRepo = ({ url }) => {
   }, []);
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-6 p-0">
-          <h4>Initial Anaylsis</h4>
+    <>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      <div className="container">
+        <div className="row">
+          <div className="col-6 p-0">
+            <h4>Initial Anaylsis</h4>
+          </div>
+          <div className="col-6 p-0 d-flex justify-content-end pe-4 ">
+            {finalRepo__status && (
+              <CiSaveDown2
+                onClick={saveReport}
+                style={{ color: 'white', fontSize: '2rem', cursor: 'pointer' }}
+              ></CiSaveDown2>
+            )}
+          </div>
         </div>
-        <div className="col-6 p-0 d-flex justify-content-end pe-4 ">
-          {finalRepo__status && (
-            <CiSaveDown2
-              onClick={saveReport}
-              style={{ color: 'white', fontSize: '2rem', cursor: 'pointer' }}
-            ></CiSaveDown2>
-          )}
-        </div>
-      </div>
-      {SK__initRepo__status && <SK__initialReport></SK__initialReport>}
-      {!SK__initRepo__status && (
-        <InitialReport data={initialReport} func={[reviewChange, langChange]} />
-      )}
+        {SK__initRepo__status && <SK__initialReport></SK__initialReport>}
+        {!SK__initRepo__status && (
+          <InitialReport
+            data={initialReport}
+            func={[reviewChange, langChange]}
+          />
+        )}
 
-      {SK__finalRepo__status && (
-        <SK__finalReport
-          review={Review}
-          lang={Language}
-          data={finalReport}
-          func={[setSK__finalRepo__status, setFinalRepo__status, setFData]}
-        />
-      )}
-      {!SK__finalRepo__status && finalRepo__status && (
-        <FinalReport data={fdata} />
-      )}
-    </div>
+        {SK__finalRepo__status && (
+          <SK__finalReport
+            review={Review}
+            lang={Language}
+            data={finalReport}
+            func={[setSK__finalRepo__status, setFinalRepo__status, setFData]}
+          />
+        )}
+        {!SK__finalRepo__status && finalRepo__status && (
+          <FinalReport data={fdata} />
+        )}
+      </div>
+    </>
   );
 };
 export default AnaylsisRepo;

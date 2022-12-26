@@ -35,7 +35,7 @@ const InitialReport = ({ data, func }) => {
         langArr[index] = b;
       });
       setTotalReviews(counter);
-      console.log(Lang);
+
       setLanguage(langArr);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -43,14 +43,14 @@ const InitialReport = ({ data, func }) => {
 
   return (
     <div className="row my-4">
-      <div className="col-md-4 d-flex flex-column bg-dark shadow p-3 justify-content-center align-items-center">
+      <div className="col-md-4 d-flex flex-column bg-dark rounded mb-md-0 mb-4 shadow p-3 justify-content-center align-items-center">
         <p className="w-100">{product[0].title}</p>
         <div className="product__box ">
           <img src={product[0].imgSrc} alt="" />
         </div>
       </div>
       <div className="col-md-8 product__desc d-flex flex-column justify-content-center align-items-center">
-        <div className="container anaylsis__container  w-100 h-100  shadow bg-dark p-3">
+        <div className="container anaylsis__container  w-100 h-100 rounded shadow bg-dark p-3">
           <div className="row">
             <div className="col">
               <h4 className="text-center ">
@@ -59,7 +59,7 @@ const InitialReport = ({ data, func }) => {
             </div>
           </div>
           <div className="row my-3">
-            <div className="col d-flex justify-content-center">
+            <div className="col d-flex flex-sm-row flex-column justify-content-center align-items-center">
               {Language.map((lang, index) => {
                 return index < 3 ? (
                   <div key={index}>
@@ -126,7 +126,9 @@ const InitialReport = ({ data, func }) => {
                 </p>
 
                 <select name="" id="" className="shadow" onChange={func[0]}>
-                  <option value="0">All</option>
+                  <option defaultValue={TotalReviews}>Choose reviews</option>
+
+                  <option value={TotalReviews}>{TotalReviews}</option>
                   <option value={parseInt(TotalReviews / 2)}>
                     {parseInt(TotalReviews / 2)}
                   </option>

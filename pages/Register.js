@@ -3,7 +3,9 @@ import Head from 'next/head';
 import useCustom from '../hooks/custom';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-
+import Menu from '../components/sideMenu';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Register = () => {
   const router = useRouter();
   const { user, error, loginWithGoogle, loginWithGithub, theme } = useCustom();
@@ -13,6 +15,7 @@ const Register = () => {
     handleSubmit,
     setValue,
     formState: { errors },
+    setError,
   } = useForm();
 
   const onSubmit = async (data) => {
@@ -53,9 +56,22 @@ const Register = () => {
       body: JSON.stringify({ Username: event }),
     });
     const resp = await req.json();
-    console.log(resp);
-    if (resp.status === 1) return false;
-    else return true;
+
+    if (resp.status === 1) {
+      return false;
+    } else {
+      toast.error(resp.message, {
+        position: 'bottom-center',
+        autoClose: true,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: 0.2,
+        theme: 'dark',
+      });
+      return true;
+    }
   };
   return (
     <>
@@ -70,6 +86,7 @@ const Register = () => {
           minHeight: 'calc(100vh - 190px)',
         }}
       >
+        <Menu />
         <div className="container-fluid Login_board_container h-100">
           {/* Search  */}
           <div className="row  h-100">
@@ -80,7 +97,7 @@ const Register = () => {
               </p>
               <form
                 action=""
-                className="d-flex flex-column mt-2"
+                className="d-flex flex-column mt-2 justify-content-center align-items-center"
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <input
@@ -88,29 +105,28 @@ const Register = () => {
                   name=""
                   id=""
                   placeholder="Name"
-                  className={`mb-3 ${errors.FirstName ? 'validError' : ''}`}
+                  className={`mb-2 ${errors.FirstName ? 'validError' : ''}`}
                   autoComplete="off"
                   {...register('FirstName', {
                     onChange: validateInput,
-                    minLength: 5,
-                    maxLength: 10,
+                    maxLength: 15,
                     required: true,
-                    pattern: /^[A-Za-z]+$/,
+                    pattern: /^[A-Za-z ]+$/,
                   })}
                 />
                 <input
                   type="text"
                   name=""
                   id=""
+                  // onBlur: isUsernameExist,
                   placeholder="Username"
-                  className={`mb-3 ${errors.Username ? 'validError' : ''}`}
+                  className={`my-2 ${errors.Username ? 'validError' : ''}`}
                   autoComplete="off"
                   {...register('Username', {
                     onChange: validateInput,
                     minLength: 4,
-                    maxLength: 10,
+                    maxLength: 15,
                     required: true,
-                    // pattern: /([A-Za-z_])([0-9])/,
                     validate: isUsernameExist,
                   })}
                 />
@@ -119,7 +135,7 @@ const Register = () => {
                   name=""
                   id=""
                   placeholder="Email"
-                  className={`mb-3 ${errors.Email ? 'validError' : ''}`}
+                  className={`my-2 ${errors.Email ? 'validError' : ''}`}
                   {...register('Email', {
                     onChange: validateInput,
                     required: true,
@@ -143,8 +159,8 @@ const Register = () => {
                 />
 
                 <button
-                  className="px-5 py-3 text-white mt-4"
-                  style={{ backgroundColor: theme }}
+                  className="py-2 text-white mt-4 border-0"
+                  style={{ backgroundColor: theme, width: '150px' }}
                 >
                   {Loading ? <div className="loader__GIF"></div> : 'Sign up'}
                 </button>

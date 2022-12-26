@@ -14,9 +14,10 @@
     "bootstrap": "^5.2.2",
     "chart.js": "^3.7.0",
     "faker": "^6.6.6",
-    "firebase": "^9.13.0",
+    "firebase": "^9.15.0",
     "hamburger-react": "^2.5.0",
-    "mongoose": "^6.7.2",
+    "jspdf": "^2.5.1",
+    "mongoose": "^6.8.1",
     "next": "12.3.1",
     "random-word-slugs": "^0.1.6",
     "random-words": "^1.2.0",
@@ -30,8 +31,9 @@
     "react-icons": "^4.6.0",
     "react-loading-skeleton": "^3.1.0",
     "react-minimal-pie-chart": "^8.4.0",
-    "react-particles-js": "^3.6.0",
+    "react-toastify": "^9.1.1",
     "react-top-loading-bar": "^2.3.1",
+    "react-tsparticles": "^2.7.0",
     "recharts": "^2.1.16"
   },
   "devDependencies": {

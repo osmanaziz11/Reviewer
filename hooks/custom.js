@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import { createContext, useContext, useEffect, useState } from 'react';
-import AuthService from '../FirebaseAuth/auth';
 
 const myContext = createContext();
 export default function useCustom() {
@@ -17,29 +16,12 @@ export function CustomHook(props) {
   const [selectedLang, setSLanguage] = useState('EN');
   const [ARStatus, setARStatus] = useState(false);
   const [theme, setTheme] = useState('#075ad3');
+  const dbinit = 0;
+  const dbfinal = 0;
 
   useEffect(() => {
     setUser(localStorage.getItem('user'));
   }, []);
-
-  const loginWithGoogle = async () => {
-    const { error, user } = await AuthService.loginWithGoogle();
-    setUser(user ?? false);
-
-    setError(error ?? '');
-  };
-
-  const loginWithGithub = async () => {
-    const { error, user } = await AuthService.loginWithGithub();
-    setUser(user ?? false);
-
-    setError(error ?? '');
-  };
-
-  const logout = async () => {
-    await AuthService.logout();
-    setUser(null);
-  };
 
   const value = {
     NavStatus,
@@ -48,9 +30,9 @@ export function CustomHook(props) {
     setNavStatus,
     progress,
     setProgress,
-    loginWithGoogle,
-    loginWithGithub,
-    logout,
+    dbinit,
+    dbfinal,
+
     totalReviews,
     setUser,
     setTReviews,

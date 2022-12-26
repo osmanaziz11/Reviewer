@@ -4,7 +4,7 @@ const SK__initialReport = () => {
   return (
     <div className="container">
       <div className="row my-4">
-        <div className="col-md-4 d-flex flex-column  shadow p-3 justify-content-center align-items-center">
+        <div className="col-lg-4 col-md-6 d-flex flex-column  shadow p-3 justify-content-center align-items-center">
           <p className="w-100 p-0">
             <Skeleton containerClassName="h-100"></Skeleton>
           </p>
@@ -16,12 +16,12 @@ const SK__initialReport = () => {
             <Skeleton containerClassName="h-100"></Skeleton>
           </div>
         </div>
-        <div className="col-md-8 product__desc d-flex flex-column justify-content-center align-items-center">
+        <div className="col-lg-8 col-md-6  product__desc d-flex flex-column justify-content-center align-items-center">
           <div className="container anaylsis__container  w-100 h-100  shadow  p-3">
             <div className="row">
               <div className="col">
                 <h4 className="text-center ">
-                  <Skeleton width={350}></Skeleton>
+                  <Skeleton containerClassName="w-100"></Skeleton>
                 </h4>
               </div>
             </div>
@@ -58,14 +58,14 @@ const SK__initialReport = () => {
               <div className="row">
                 <div className="col d-flex flex-column justify-content-center options align-items-center">
                   <p className="text-center">
-                    <Skeleton width={350}></Skeleton>
+                    <Skeleton containerClassName="w-100"></Skeleton>
                   </p>
 
-                  <Skeleton width={350} height={40}></Skeleton>
-                  <p className="text-center mt-3">
-                    <Skeleton width={350}></Skeleton>
+                  <Skeleton containerClassName="w-100" height={40}></Skeleton>
+                  <p className="text-center mt-3 w-100">
+                    <Skeleton containerClassName="w-100"></Skeleton>
                   </p>
-                  <Skeleton width={350} height={40}></Skeleton>
+                  <Skeleton containerClassName="w-100" height={40}></Skeleton>
                 </div>
               </div>
             </form>

@@ -8,10 +8,15 @@ import { TbBrandMeta } from 'react-icons/tb';
 import Head from 'next/head';
 import useCustom from '../hooks/custom';
 import { useEffect } from 'react';
-
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  GithubAuthProvider,
+} from 'firebase/auth';
+import { firebaseApp } from '../firebase/firebase.config';
 const Login = () => {
-  const { user, setUser, error, loginWithGoogle, loginWithGithub, theme } =
-    useCustom();
+  const { user, setUser, error, theme } = useCustom();
   const router = useRouter();
   useEffect(() => {
     if (user) {
@@ -124,7 +129,7 @@ const Login = () => {
                 />
                 <p className="text-center mt-3">Forget Password?</p>
                 <ul className="list-unstyled m-0 p-0 social d-flex my-3 justify-content-center align-items-center">
-                  <li className="shadow" onClick={loginWithGoogle}>
+                  <li className="shadow">
                     <FcGoogle
                       style={{
                         color: 'white',
@@ -133,7 +138,7 @@ const Login = () => {
                       }}
                     />
                   </li>
-                  <li className="mx-3 shadow" onClick={loginWithGithub}>
+                  <li className="mx-3 shadow">
                     <TbBrandMeta
                       style={{
                         color: '#0C8CE9',

@@ -2,10 +2,10 @@
 // {
 //   Username:" ",
 // }
-require('../../db/config');
+// require('../../db/config');
 import { CiAlignRight } from 'react-icons/ci';
 import { comparePassword } from '../../db/util/functions';
-var users = require('../../db/models/report');
+// var users = require('../../db/models/report');
 
 export default async function handler(req, res) {
   if (req.method == 'POST') {

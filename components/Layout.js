@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import useCustom from '../hooks/custom';
 import Menu from './sideMenu';
 import CLoader from './CLoader';
+import { ToastContainer } from 'react-toastify';
 
 const Layout = ({ title, children }) => {
   const { user, error, setProgress, progress } = useCustom();
@@ -29,13 +30,14 @@ const Layout = ({ title, children }) => {
         style={{
           maxWidth: '1500px',
           overflow: 'hidden',
-          minHeight: 'calc(100vh - 190px)',
+          minHeight: 'calc(100vh - 200px)',
         }}
       >
         <Menu />
         <div id="stars"></div>
         <div id="stars2"></div>
         <div id="stars3"></div>
+
         {children}
       </div>
     </>
